@@ -1,14 +1,52 @@
-﻿Wizard wizardA = new Wizard("ahmad", 70);
+﻿using System.Threading.Channels;
+using System.Xml.Linq;
+
+Wizard wizardA = new Wizard("ahmad", 70);
 Wizard wizardB = new Wizard("nailong", 90);
 
 Console.WriteLine("Permainan Dimulai.....\n");
 wizardA.ShowStats();
 wizardB.ShowStats();
 
-wizardA.Attack(wizardB);
-wizardB.Attack(wizardA);
-wizardA.Attack(wizardB);
+//wizardA.Attack(wizardB);
+//wizardB.Attack(wizardA);
+//wizardA.Heal();
+//wizardA.Attack(wizardB);
 
+string pilihan;
+
+while (wizardA.Energi > 0 && wizardB.Energi > 0)
+{
+    Console.WriteLine($"1. {wizardB.Nama} menyerang {wizardB.Nama}");
+    Console.WriteLine($"2. {wizardB.Nama} menyerang {wizardA.Nama}");
+    Console.WriteLine($"3. {wizardA.Nama} melakukan heal");
+    Console.WriteLine($"4. {wizardB.Nama} melakukan heal");
+
+    Console.WriteLine("\nMasukan pilihanmu (1/2/3/4): ");
+    pilihan = Console.ReadLine();
+
+    if (pilihan == "1")
+    {
+        wizardA.Attack(wizardB);
+    }
+    else if (pilihan == "1")
+    {
+        wizardB.Attack(wizardA);
+    }
+    else if (pilihan == "3")
+    {
+        wizardA.Heal();
+    }
+    else if (pilihan == "4")
+    {
+        wizardB.Heal();
+    }
+    else
+    {
+        Console.WriteLine("Pilihan tidak valid");
+
+    }
+}
 Console.WriteLine("Permainan Berakhir....!\n");
 wizardA.ShowStats();
 wizardB.ShowStats();
@@ -42,4 +80,22 @@ public class Wizard
         Console.WriteLine($"{Nama} menyerang {wizardlawanOBJ.Nama}");
         Console.WriteLine($"Sisa energi {wizardlawanOBJ.Nama} adalah {wizardlawanOBJ.Energi}\n");
     }
+
+    public void Heal()
+    {
+        Energi += 5;
+
+        if (Energi <= 100)
+        {
+            Console.WriteLine($"{Nama} melakukan heal! Energi meningkat menjadi {Energi}");
+        }
+        else
+        {
+            Energi = 100;
+            Console.WriteLine("Sudah mencapai maksimum!");
+        }
+    }
+
+
+
 }
